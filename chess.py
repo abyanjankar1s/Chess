@@ -1,5 +1,9 @@
 
 
+from abc import ABC, abstractmethod
+from enum import Enum
+
+
 class Color(Enum):
     WHITE = 1 
     BLACK = 2 
@@ -178,7 +182,7 @@ class Queen(Piece):
     def is_valid_move(self, start_row, start_col, end_row, end_col, board):
         return MovementUtil.is_valid_straight_move(start_row, start_col, end_row, end_col, self.get_color(), board) or \
         MovementUtil.is_valid_diagonal_move(start_row, start_col, end_row, end_col, self.get_color(), board)
-    def get_color(self):
+    def get_symbol(self):
         return 'Q' if self.get_color() == Color.WHITE else 'q'
     
     
@@ -196,7 +200,7 @@ class ChessBoard:
         self.initialize_black_pieces()
         self.initialize_white_pieces()
 
-    def initialize_black_piece(self):
+    def initialize_black_pieces(self):
         for i in range(8):
             self.board[1][i].set_piece(Pawn(Color.BLACK))
         
@@ -209,7 +213,7 @@ class ChessBoard:
         self.board[0][3].set_piece(Queen(Color.BLACK))
         self.board[0][4].set_piece(King(Color.BLACK))
 
-    def initialize_white_piece(self):
+    def initialize_white_pieces(self):
         for i in range(8):
             self.board[6][i].set_piece(Pawn(Color.WHITE))
         
@@ -250,7 +254,7 @@ class ChessBoard:
             else:
                 print(f"Invalid Move. Try again.")
 
-    def desplay_board(self):
+    def display_board(self):
         print(" 0 1 2 3 4 5 6 7")
         print(" ---------------")
         for i in range(8):
@@ -288,4 +292,8 @@ class ChessGame:
                 self.current_player = self.black_player if self.current_player == self.white_player else self.white_player
             else:
                 print("Invalid move.") 
+
+
+game = ChessGame()
+game.start_game()
 
